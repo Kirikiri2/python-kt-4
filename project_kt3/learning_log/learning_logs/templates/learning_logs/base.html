@@ -1,26 +1,103 @@
+{% load bootstrap4 %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>🌸 Learning Log</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+    <style>
+        body {
+            background-color: #fff0f5;
+            /* светло-розовый фон */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: #ffc0cb !important;
+            /* розовая навигация */
+        }
+
+        .navbar-brand,
+        .nav-link,
+        .navbar-text {
+            color: #8b005d !important;
+            font-weight: 500;
+        }
+
+        .navbar .btn {
+            border-color: #8b005d;
+            color: #8b005d;
+        }
+
+        .navbar .btn:hover {
+            background-color: #8b005d;
+            color: white;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(255, 192, 203, 0.4);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d63384;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
-    <p>
-        <a href="{% url 'learning_logs:index' %}">Learning Log</a> —
-        <a href="{% url 'learning_logs:topics' %}">Topics</a>
-        {% if user.is_authenticated %}
-        Hello, {{ user.username }}.
-    <form method="post" action="{% url 'users:logout' %}">{% csrf_token %}
-        <button type="submit">logout</button>
-    </form>
-    {% else %}
-    <a href="{% url 'users:login' %}">log in</a>
-    {% endif %}
-    </p>
-    {% block content %}{% endblock content %}
+    <nav class="navbar navbar-expand-md navbar-light mb-4 border-bottom">
+        <a class="navbar-brand" href="{% url 'learning_logs:index' %}">🌸 Learning Log</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'learning_logs:topics' %}">📚 Topics</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="navbar-text">👋 Hello, <strong>{{ user.username }}</strong>!</span>
+                </li>
+                <li class="nav-item">
+                    <form method="post" action="{% url 'users:logout' %}" class="form-inline ml-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary">🚪 Log out</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:register' %}">📝 Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:login' %}">🔐 Log in</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        {% block content %}{% endblock content %}
+    </main>
 </body>
 
 </html>

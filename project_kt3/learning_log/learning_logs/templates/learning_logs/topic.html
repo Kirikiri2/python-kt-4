@@ -1,34 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'learning_logs/base.html' %}
+{% load bootstrap4 %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% block content %}
+<div class="card shadow-sm p-4 mb-4" style="background-color: #fff0f5; border-radius: 12px;">
+    <h2 class="mb-4" style="color: #d63384;">📚 Topic: <em>{{ topic }}</em></h2>
 
-<body>
-    {% extends 'learning_logs/base.html' %}
-    {% block content %}
-    <p>Topic: {{ topic }}</p>
-    <p>Entries:</p>
     <p>
-        <a href="{% url 'learning_logs:new_entry' topic.id %}">add new entry</a>
+        <a href="{% url 'learning_logs:new_entry' topic.id %}" class="btn btn-pink mb-3"
+            style="background-color: #ff69b4; color: white;">
+            ➕ Add new entry
+        </a>
     </p>
-    <ul>
+
+    <ul class="list-group">
         {% for entry in entries %}
-        <li>
-            <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-            <p>{{ entry.text|linebreaks }}</p>
+        <li class="list-group-item mb-3" style="border-radius: 10px; background-color: #ffe6f0;">
+            <p class="text-muted mb-1" style="font-size: 0.9rem;">
+                {{ entry.date_added|date:'M d, Y H:i' }}
+            </p>
+            <p style="white-space: pre-line;">{{ entry.text|linebreaks }}</p>
             <p>
-                <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
+                <a href="{% url 'learning_logs:edit_entry' entry.id %}" class="btn btn-outline-pink btn-sm"
+                    style="border-color: #ff69b4; color: #d63384;">
+                    ✏️ Edit entry
+                </a>
             </p>
         </li>
         {% empty %}
-        <li>There are no entries for this topic yet ¯\_(ツ)_/¯</li>
+        <li class="list-group-item" style="border-radius: 10px; background-color: #ffe6f0; color: #d63384;">
+            There are no entries for this topic yet ¯\_(ツ)_/¯
+        </li>
         {% endfor %}
     </ul>
-    {% endblock content %}
-</body>
-
-</html>
+</div>
+{% endblock content %}

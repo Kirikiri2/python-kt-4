@@ -1,26 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% block content %}
+<div class="card shadow-sm p-4 mb-4" style="background-color: #fff0f5; border-radius: 12px;">
+    <h2 class="mb-4" style="color: #d63384;">➕ Add a new topic</h2>
 
-<body>
-
-    {% extends "learning_logs/base.html" %}
-    {% block content %}
-
-    <p>Add a new topic:</p>
-    <form action="{% url 'learning_logs:new_topic' %}" method='post'>
+    <form action="{% url 'learning_logs:new_topic' %}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button name="submit">add topic</button>
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-pink mt-3" style="background-color: #ff69b4; color: white;">
+            Add topic
+        </button>
     </form>
-
-
-    {% endblock content %}
-</body>
-
-</html>
+</div>
+{% endblock content %}

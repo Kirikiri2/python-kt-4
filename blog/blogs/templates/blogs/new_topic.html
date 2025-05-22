@@ -1,25 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "blogs/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% block content %}
+<div class="new-topic-container">
+  <h2 class="new-topic-title">🌊 Добавить новую тему</h2>
 
-<body>
-
-    {% extends "blogs/base.html" %}
-    {% block content %}
-
-    <p>Add a new topic:</p>
-    <form action="{% url 'blogs:new_topic' %}" method='post'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button name="submit">add topic</button>
-    </form>
-
-    {% endblock content %}
-</body>
-
-</html>
+  <form action="{% url 'blogs:new_topic' %}" method="post" class="topic-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-submit">➕ Добавить тему</button>
+  </form>
+</div>
+{% endblock content %}

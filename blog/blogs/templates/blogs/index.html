@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "blogs/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    {% extends "blogs/base.html" %}
-    {% block content %}
-    <p>Blog helps you!</p>
-    {% endblock content %}
-</body>
-
-</html>
+{% block content %}
+<div class="index-container">
+    <h2 class="index-title">📓 Добро пожаловать!</h2>
+    <p class="index-text">Blog помогает тебе отслеживать свои записи, мысли и вдохновение.</p>
+    <a href="{% url 'blogs:topics' %}" class="btn-start">📝 Начать писать</a>
+</div>
+{% endblock content %}

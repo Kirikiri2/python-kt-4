@@ -1,19 +1,529 @@
+{% load bootstrap4 %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>海ブログ | Sea Blog</title>
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
+    <!-- Японский шрифт -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome для иконки меню 🍱 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #fcefee, #c2e9f7, #a1c4fd);
+            /* японский градиент 🌸🌊 */
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #1a1a1a;
+            min-height: 100vh;
+        }
+
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-custom {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-bottom: 3px solid #66b3ff;
+        }
+
+        .navbar-brand,
+        .nav-link,
+        .navbar-text {
+            color: #00334d !important;
+        }
+
+        .btn-outline-primary {
+            border-color: #66b3ff;
+            color: #00334d;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #66b3ff;
+            color: white;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            display: none;
+            /* отключаем стандартную иконку Bootstrap */
+        }
+
+        .navbar-toggler i {
+            font-size: 1.5rem;
+            color: #00334d;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #fcefee, #c2e9f7, #a1c4fd);
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #1f1f1f;
+        }
+
+        .edit-entry-container {
+            background: rgba(255, 255, 255, 0.85);
+            max-width: 95%;
+            width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-link {
+            text-decoration: none;
+            color: #4a90e2;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        .topic-link:hover {
+            color: #2c70ba;
+        }
+
+        .edit-title {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .edit-form input[type="text"],
+        .edit-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .btn-save {
+            background-color: #4a90e2;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-save:hover {
+            background-color: #357dc0;
+        }
+
+        .index-container {
+            background: rgba(255, 255, 255, 0.85);
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .index-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .index-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .new-entry-container {
+            background: rgba(255, 255, 255, 0.9);
+            max-width: 650px;
+            margin: 3rem auto;
+            padding: 2rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-link {
+            text-decoration: none;
+            color: #4a90e2;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .topic-link:hover {
+            color: #2c70ba;
+        }
+
+        .new-entry-title {
+            font-size: 1.6rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .entry-form input[type="text"],
+        .entry-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            box-sizing: border-box;
+            background-color: #fff;
+            resize: vertical;
+        }
+
+        .btn-add {
+            background-color: #4a90e2;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-add:hover {
+            background-color: #357dc0;
+        }
+
+        .new-topic-container {
+            background: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 4rem auto;
+            padding: 2rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .new-topic-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .topic-form input[type="text"],
+        .topic-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            box-sizing: border-box;
+            background-color: #fff;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background-color: #4a90e2;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .btn-submit:hover {
+            background-color: #357dc0;
+        }
+
+        .topic-container {
+            max-width: 700px;
+            margin: 3rem auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem 2.5rem;
+        }
+
+        .topic-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #345678;
+        }
+
+        .new-entry-link {
+            margin-bottom: 1.8rem;
+        }
+
+        .btn-add-entry {
+            background-color: #4a90e2;
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-add-entry:hover {
+            background-color: #357dc0;
+        }
+
+        .entries-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .entry-item {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .entry-date {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-text {
+            font-size: 1.1rem;
+            margin-bottom: 0.7rem;
+            white-space: pre-wrap;
+        }
+
+        .entry-edit-link {
+            font-size: 0.9rem;
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .entry-edit-link:hover {
+            text-decoration: underline;
+        }
+
+        .no-entries {
+            font-style: italic;
+            color: #999;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .topics-container {
+            max-width: 600px;
+            margin: 3rem auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem 2.5rem;
+        }
+
+        .topics-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #0077b6;
+            text-align: center;
+        }
+
+        .topics-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 2rem;
+        }
+
+        .topic-item {
+            margin-bottom: 1rem;
+        }
+
+        .topic-link {
+            text-decoration: none;
+            color: #023e8a;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .topic-link:hover {
+            color: #0077b6;
+            text-decoration: underline;
+        }
+
+        .no-topics {
+            font-style: italic;
+            color: #555;
+            text-align: center;
+        }
+
+        .add-topic-link {
+            text-align: center;
+        }
+
+        .btn-add-topic {
+            background-color: #0096c7;
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-add-topic:hover {
+            background-color: #0077b6;
+        }
+
+        @media (max-width: 480px) {
+            .edit-entry-container {
+                padding: 1.2rem;
+            }
+
+            .edit-title {
+                font-size: 1.3rem;
+            }
+
+            .btn-save {
+                font-size: 0.95rem;
+                padding: 0.6rem;
+            }
+
+            .new-entry-container {
+                margin: 2rem 1rem;
+                padding: 1.5rem 1.5rem;
+            }
+
+            .new-entry-title {
+                font-size: 1.3rem;
+            }
+
+            .btn-add {
+                padding: 0.6rem 1rem;
+                font-size: 0.95rem;
+            }
+
+            .new-topic-container {
+                margin: 2rem 1rem;
+                padding: 1.5rem 1.5rem;
+            }
+
+            .new-topic-title {
+                font-size: 1.6rem;
+            }
+
+            .btn-submit {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .topic-container {
+                margin: 2rem 1rem;
+                padding: 1.5rem 1.5rem;
+            }
+
+            .topic-title {
+                font-size: 1.6rem;
+            }
+
+            .btn-add-entry {
+                padding: 0.6rem 1.4rem;
+                font-size: 1rem;
+            }
+
+            .entry-text {
+                font-size: 1rem;
+            }
+
+            .topics-container {
+                margin: 2rem 1rem;
+                padding: 1.5rem 1.5rem;
+            }
+
+            .topics-title {
+                font-size: 1.6rem;
+            }
+
+            .topic-link {
+                font-size: 1rem;
+            }
+
+            .btn-add-topic {
+                padding: 0.6rem 1.4rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+
+    </style>
 </head>
 
 <body>
-    <p>
-        <a href="{% url 'blogs:index' %}">Blog</a> —
-        <a href="{% url 'blogs:topics' %}">Topics</a>
-        
-    </p>
-    {% block content %}{% endblock content %}
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="{% url 'blogs:index' %}">🌸 海ブログ | Sea Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i> <!-- Гамбургер 🍱 -->
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blogs:topics' %}">📚 トピック | Topics</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="navbar-text">👋 こんにちは、{{ user.username }} さん！</span>
+                </li>
+                <li class="nav-item">
+                    <form method="post" action="{% url 'users:logout' %}" class="form-inline ml-2">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-primary btn-sm" type="submit">🔓 ログアウト</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:register' %}">📝 登録 | Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:login' %}">🔐 ログイン | Log in</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <div class="overlay">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </main>
 </body>
 
 </html>

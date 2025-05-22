@@ -1,23 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "blogs/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% block content %}
+<div class="new-entry-container">
+    <p><a href="{% url 'blogs:topic' topic.id %}" class="topic-link">📘 {{ topic }}</a></p>
+    <h2 class="new-entry-title">✍️ Добавить новую запись</h2>
 
-<body>
-    {% extends "blogs/base.html" %}
-    {% block content %}
-    <p><a href="{% url 'blogs:topic' topic.id %}">{{ topic }}</a></p>
-    <p>Add a new entry:</p>
-    <form action="{% url 'blogs:new_entry' topic.id %}" method='post'>
+    <form action="{% url 'blogs:new_entry' topic.id %}" method="post" class="entry-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button name='submit'>add entry</button>
+        <button type="submit" class="btn-add">➕ Добавить запись</button>
     </form>
-    {% endblock content %}
-</body>
-
-</html>
+</div>
+{% endblock content %}

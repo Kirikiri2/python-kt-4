@@ -1,0 +1,14 @@
+{% extends "blogs/base.html" %}
+
+{% block content %}
+<div class="edit-entry-container">
+    <p><a href="{% url 'blogs:topic' topic.id %}" class="topic-link">📘 {{ topic }}</a></p>
+    <h2 class="edit-title">🖋️ Изменить запись</h2>
+
+    <form action="{% url 'blogs:edit_entry' entry.id %}" method="post" class="edit-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-save">💾 Сохранить изменения</button>
+    </form>
+</div>
+{% endblock content %}
